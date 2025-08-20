@@ -23,7 +23,6 @@ const unitSignup = async (req: Request, res: Response) => {
 
 // UNIT SIGNIN
 const unitSignin = async (req: Request, res: Response) => {
-  console.log("Hello Sign In!");
   const { unitId, password } = req.body;
 
   try {
@@ -32,7 +31,9 @@ const unitSignin = async (req: Request, res: Response) => {
     // CREATE A TOKEN (JWT)
     const token = createToken(unit._id);
 
-    res.status(200).json({ token });
+    res
+      .status(200)
+      .json({ token, unitName: unit.unitName, unitId: unit.unitId });
   } catch (error: any) {
     res.status(400).json({ error: error.message });
   }
