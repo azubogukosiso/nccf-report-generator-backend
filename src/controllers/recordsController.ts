@@ -2,16 +2,30 @@ import { Request, Response } from "express";
 import Records from "../models/recordsModel";
 
 const createRecords = async (req: Request, res: Response) => {
-  const newRecord = await Records.create(req.body);
+  const recordId = req.query.id;
 
-  if (newRecord)
-    res.json({ message: "Record created successfully!" }).status(200);
+  if (recordId) {
+    const editedRecord = await Records.findByIdAndUpdate(recordId, req.body);
+    if (editedRecord)
+      res.json({ message: "Record edited successfully!" }).status(201);
+  } else {
+    const newRecord = await Records.create(req.body);
+
+    if (newRecord)
+      res.json({ message: "Record created successfully!" }).status(200);
+  }
 };
 
 const viewRecords = async (req: Request, res: Response) => {
-  const allRecords = await Records.find();
+  const recordId = req.query.id;
 
-  if (allRecords) res.json(allRecords).status(200);
+  if (recordId) {
+    const singleRecord = await Records.findById(recordId);
+    if (singleRecord) res.json(singleRecord).status(200);
+  } else {
+    const allRecords = await Records.find();
+    if (allRecords) res.json(allRecords).status(200);
+  }
 };
 
 export { createRecords, viewRecords };
