@@ -28,4 +28,13 @@ const viewRecords = async (req: Request, res: Response) => {
   }
 };
 
-export { createRecords, viewRecords };
+const deleteRecords = async (req: Request, res: Response) => {
+  const recordId = req.query.id;
+
+  const deletedRecord = await Records.findByIdAndDelete(recordId);
+
+  if (deletedRecord)
+    res.json({ message: "Record deleted succesfully!" }).status(201);
+};
+
+export { createRecords, viewRecords, deleteRecords };
