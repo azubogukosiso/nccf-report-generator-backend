@@ -16,6 +16,10 @@ const recordsSchema = new Schema(
       type: Array,
       required: true,
     },
+    unitId: {
+      type: Number,
+      required: true,
+    },
   },
   { timestamps: true }
 );

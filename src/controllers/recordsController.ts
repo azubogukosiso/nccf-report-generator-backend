@@ -18,12 +18,13 @@ const createRecords = async (req: Request, res: Response) => {
 
 const viewRecords = async (req: Request, res: Response) => {
   const recordId = req.query.id;
+  const unitId = req.query.unitId;
 
   if (recordId) {
     const singleRecord = await Records.findById(recordId);
     if (singleRecord) res.json(singleRecord).status(200);
   } else {
-    const allRecords = await Records.find();
+    const allRecords = await Records.find({ unitId });
     if (allRecords) res.json(allRecords).status(200);
   }
 };
