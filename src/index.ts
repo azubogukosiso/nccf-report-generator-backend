@@ -1,12 +1,16 @@
-import express, { Request, Response } from "express";
+import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";
 import mongoose from "mongoose";
 
 import authRoutes from "./routes/auth";
 import recordsRoutes from "./routes/records";
 
+// LOAD ENVIRONMENT VARIABLES FROM .ENV FILE
+dotenv.config();
+
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // SETTING UP CORS
 app.use(cors({ credentials: true, origin: ["http://localhost:5173"] }));
@@ -18,8 +22,13 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/records", recordsRoutes);
 
+const dbUrl = process.env.DB_URL;
+if (!dbUrl) {
+  throw new Error("DB_URL environment variable is not defined.");
+}
+
 mongoose
-  .connect("mongodb://127.0.0.1:27017/NCCF_Report_DB")
+  .connect(dbUrl)
   .then(() => {
     app.listen(port, () => {
       console.log(`Server running at http://localhost:${port}`);
