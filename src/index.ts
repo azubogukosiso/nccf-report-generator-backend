@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 
 import authRoutes from "./routes/auth";
 import recordsRoutes from "./routes/records";
+import reportsRoutes from "./routes/reports";
 
 // LOAD ENVIRONMENT VARIABLES FROM .ENV FILE
 dotenv.config();
@@ -21,6 +22,7 @@ app.use(express.json());
 // ROUTES
 app.use("/api/auth", authRoutes);
 app.use("/api/records", recordsRoutes);
+app.use("/api/reports", reportsRoutes);
 
 const dbUrl = process.env.DB_URL;
 if (!dbUrl) {
