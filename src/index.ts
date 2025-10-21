@@ -13,8 +13,11 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+if (!process.env.CLIENT_URL)
+  throw new Error("CLIENT_URL environment variable is required");
+
 // SETTING UP CORS
-app.use(cors({ credentials: true, origin: ["http://localhost:5173"] }));
+app.use(cors({ credentials: true, origin: [process.env.CLIENT_URL] }));
 
 // MIDDLEWARE
 app.use(express.json());

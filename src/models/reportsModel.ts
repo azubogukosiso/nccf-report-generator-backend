@@ -4,6 +4,14 @@ const Schema = mongoose.Schema;
 
 const reportsSchema = new Schema(
   {
+    month: {
+      type: String,
+      required: true,
+    },
+    year: {
+      type: String,
+      required: true,
+    },
     records: {
       type: Array,
       required: true,
